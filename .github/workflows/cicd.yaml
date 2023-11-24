@@ -22,7 +22,7 @@ concurrency:
 jobs:
   test:
     name: test
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: 'test'
         shell: bash
@@ -32,7 +32,7 @@ jobs:
     name: Build & Deploy Staging Production
     needs: test
     # needs: ci.test-coverage
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     if:
       contains('
       refs/heads/staging
