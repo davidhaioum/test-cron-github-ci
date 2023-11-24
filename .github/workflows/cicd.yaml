@@ -5,11 +5,11 @@ on:
     types: [ opened, synchronize, reopened ]
     branches:
       - staging
-      - master
+      - main
   push:
     branches:
       - staging
-      - master
+      - main
   schedule:
     - cron: '*/1 * * * *'  # Every one minute
   # To trigger manually
@@ -36,7 +36,7 @@ jobs:
     if:
       contains('
       refs/heads/staging
-      refs/heads/master
+      refs/heads/main
       ', github.ref)
     steps:
       - name: 'build'
