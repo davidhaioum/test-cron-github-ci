@@ -1,0 +1,45 @@
+name: Build & Test & Deploy PROD STAGING
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches:
+      - staging
+      - master
+  push:
+    branches:
+      - staging
+      - master
+  schedule:
+    - cron: '*/1 * * * *'  # Every one minute
+  # To trigger manually
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu
+    steps:
+      - name: 'test'
+        shell: bash
+        run: |
+          echo "test"
+  build:
+    name: Build & Deploy Staging Production
+    needs: test
+    # needs: ci.test-coverage
+    runs-on: ubuntu
+    if:
+      contains('
+      refs/heads/staging
+      refs/heads/master
+      ', github.ref)
+    steps:
+      - name: 'build'
+        shell: bash
+        run: |
+          echo "build"
